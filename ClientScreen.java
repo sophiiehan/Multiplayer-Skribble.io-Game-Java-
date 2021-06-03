@@ -31,7 +31,6 @@ public class ClientScreen extends JPanel implements ActionListener{
 	private PrintWriter out;
   private JTextField textInput;
 	private JButton sendButton;
-	private JButton newGameButton;
 	private String newGameText;
 	private boolean pressed;
 	private String gridString;
@@ -84,11 +83,6 @@ public class ClientScreen extends JPanel implements ActionListener{
 	 	this.add(sendButton);
 	 	sendButton.addActionListener(this);
 
-		newGameButton = new JButton("New Game");
-		newGameButton.setBounds(400,550, 200, 100);
-		this.add(newGameButton);
-		newGameButton.addActionListener(this);
-
 		this.setFocusable(true);
 
 	}
@@ -109,7 +103,6 @@ public class ClientScreen extends JPanel implements ActionListener{
 
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Arial", Font.BOLD, 20));
-		g.drawString("Points: "+ points, 100,550);
 
 		for(int i = 0; i<gridMap.getKeys().size(); i++){
 			Location l = gridMap.getKeys().get(i);
@@ -125,7 +118,7 @@ public class ClientScreen extends JPanel implements ActionListener{
 
 	public void poll() throws IOException{
 
-		String hostName = "localhost";
+		String hostName = "10.210.96.132";
 		int portNumber = 1024;
 		Socket serverSocket = new Socket(hostName, portNumber);
 
@@ -136,15 +129,15 @@ public class ClientScreen extends JPanel implements ActionListener{
 
 			gridString = (String)inObject.readObject();
 			gridMap = makeGrid();
-			 reset = Boolean.parseBoolean((String)inObject.readObject());
-			 System.out.println("reset");
+
+			// System.out.println(inObject.readObject());
 			repaint();
 
 		while(true){
 		 	gridString = (String)inObject.readObject();
 			gridMap = makeGrid();
-			 reset = Boolean.parseBoolean((String)inObject.readObject());
-			 System.out.println("reset");
+		//	System.out.println(inObject.readObject());
+			// reset = Boolean.parseBoolean((String)inObject.readObject());
 			repaint();
 			 }
 

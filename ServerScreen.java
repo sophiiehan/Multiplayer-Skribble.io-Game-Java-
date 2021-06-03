@@ -29,6 +29,8 @@ import java.net.*;
 public class ServerScreen extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 
 	private MyHashMap<Location, Tile> gridMap;
+	private JScrollPane scrollPane;
+	private int playerPoints;
 	private String guess;
 	private DLList<String> wordBank;
 	private boolean instructions;
@@ -56,6 +58,7 @@ public class ServerScreen extends JPanel implements ActionListener, MouseListene
 	private PushbackInputStream pin ;
 
 	public ServerScreen(){
+		playerPoints = 0;
 		instructions = true;
 		reset = false;
 		guess = "";
@@ -113,7 +116,7 @@ public class ServerScreen extends JPanel implements ActionListener, MouseListene
     add(chatPane);
 		chatPane.setText(chats);
 
-		JScrollPane scrollPane = new JScrollPane(chatPane);
+	 scrollPane = new JScrollPane(chatPane);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(558,300,224,100);
@@ -121,7 +124,7 @@ public class ServerScreen extends JPanel implements ActionListener, MouseListene
 
 
 
-		color = new Color(255,255,255);
+		color = new Color(0,0,0);
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		this.setLayout(null);
@@ -139,6 +142,7 @@ public class ServerScreen extends JPanel implements ActionListener, MouseListene
 
 
 		if(instructions == false){
+			scrollPane.setVisible(true);
 			g.drawImage(colorPalette,555,8,null);
 			chatPane.setText(chats);
 			int x = 10;
@@ -152,11 +156,27 @@ public class ServerScreen extends JPanel implements ActionListener, MouseListene
 			g.setColor(Color.BLACK);
 			g.setFont(new Font("Arial", Font.BOLD, 30));
 			g.drawString("Your word is: " +word, 100, 550);
+				g.setFont(new Font("Arial", Font.BOLD, 15));
+			g.drawString("Words Guessed Correctly: "+ playerPoints, 100, 570);
 
 			g.setColor(color);
 			g.fillRect(558,450,230,130);
 			g.setColor(Color.BLACK);
 			g.drawRect(558,450,230,130);
+		}
+		if(instructions == true){
+			scrollPane.setVisible(false);
+			g.setFont(new Font("Arial", Font.BOLD, 15));
+			g.drawString("Welcome to Sophie's version of Pictionary! (Walmart Skribble.io) ", 100, 100);
+			g.drawString("How to Play (Drawer): ",250,125);
+			g.drawString("1. Select a Color on the color pallete, and draw your assigned word on the canvas. ", 100, 150);
+			g.drawString("2.Player guesses will show up in the chat box on the right. ", 100,175);
+			g.drawString("3.When the player guesses the word correctly, you will be given a new word.", 100, 200);
+
+			g.drawString("How to Play (Guesser): ",250,250);
+			g.drawString("1. Drawing of the artist will appear on your grid ", 100, 275);
+			g.drawString("2.Enter in your guess in the text box (lower case)", 100,300);
+			g.drawString("3.When the player guesses the word correctly, your canvas should clear. Wait for next round.", 100, 325);
 		}
 
 
@@ -180,10 +200,11 @@ public class ServerScreen extends JPanel implements ActionListener, MouseListene
 			}
 
 			try {
-				outObject.reset();
+
 				outObject.writeObject(gridMap.toString());
-				reset = true;
-				outObject.writeObject(reset);
+			//	outObject.writeObject("reset");
+				// reset = true;
+				// outObject.writeObject(reset);
 			}
 			catch (UnknownHostException x) {
 				System.err.println("Host unkown: ");
@@ -193,8 +214,12 @@ public class ServerScreen extends JPanel implements ActionListener, MouseListene
 				System.exit(1);
 			}
 
+			int r= (int)(Math.random()*wordBank.size());
+			word = wordBank.get(r);
+
 			reset = true;
-			chats = "";
+			playerPoints++;
+			repaint();
 		}
 	}
 
