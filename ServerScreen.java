@@ -70,24 +70,24 @@ public class ServerScreen extends JPanel implements ActionListener, MouseListene
 		}
 
 		wordBank = new DLList<String>();
-		wordBank.add("apple");
-		wordBank.add("avocado");
-		wordBank.add("banana");
-		wordBank.add("blueberry");
-		wordBank.add("cherry");
-		wordBank.add("grape");
-		wordBank.add("kiwi");
-		wordBank.add("lemon");
-		wordBank.add("mango");
-		wordBank.add("peach");
-		wordBank.add("dragonfruit");
-		wordBank.add("pineapple");
-		wordBank.add("raspberry");
-		wordBank.add("strawberry");
-		wordBank.add("watermelon");
+		wordBank.add("anteater");
+		wordBank.add("bear");
+		wordBank.add("blaze");
+		wordBank.add("beetle");
+		wordBank.add("camel");
+		wordBank.add("giraffe");
+		wordBank.add("koala");
+		wordBank.add("lychee");
+		wordBank.add("moose");
+		wordBank.add("pommegranate");
+		wordBank.add("dandelion");
+		wordBank.add("parrot");
+		wordBank.add("reeses puff");
+		wordBank.add("beans");
+		wordBank.add("mole");
 		wordBank.add("orange");
-		wordBank.add("pear");
-		wordBank.add("tomato");
+		wordBank.add("sophie");
+		wordBank.add("rhino");
 		wordBank.add("horse");
 
 		int r= (int)(Math.random()*wordBank.size());
